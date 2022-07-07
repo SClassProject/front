@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+  {% include 'head.html' %}
+  <body>
+    <div id="login_user">
+      {%if session['login_user']%} {{session['login_user']}} {%endif%}
+    </div>
+    <div id="room_address">클래스 번호: {{room_id}}</div>
+    <div id="chat">채팅창</div>
+    <div id="room">
+      <canvas width="2048" height="1152"></canvas>
+      <script src="../static/js/character.js"></script>
+    </div>
+    <div id="screen_object">
+      <div id="screen">화면</div>
+      <ul id="screen_list" class="hidden">
+        <li><input type="button" class="list" value="전체화면" /></li>
+        <li><input type="button" class="list" value="화면공유" /></li>
+      </ul>
+    </div>
+    <div id="random_object">
+      <div id="random">랜덤</div>
+      <ul id="random_list" class="hidden">
+        <li><input type="button" class="list" value="랜덤추첨" /></li>
+      </ul>
+    </div>
+    <div id="group_object">
+      <div id="group">소그룹</div>
+      <ul id="group_list" class="hidden">
+        <li><input type="button" class="list" value="소그룹 생성" /></li>
+      </ul>
+    </div>
+    <script src="../static/js/object.js"></script>
+  </body>
+</html>
