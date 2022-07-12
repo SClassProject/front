@@ -1,6 +1,7 @@
 from flask import Flask, session, render_template, url_for, redirect, request
 from forms import RegistrationForm, roomRegistration, loginRegistration
 import numpy as np
+import ssl
 
 app = Flask(__name__)
  
@@ -19,7 +20,7 @@ def login():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        return render_template("character.html")
+        return render_template("getimg.html")
     return render_template("register.html", form=form)
 
 @app.route('/register/getImg')
@@ -60,4 +61,4 @@ def room(room_id):
     return render_template("room.html", room_id=room_id)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=443, debug=True, ssl_context='adhoc')
