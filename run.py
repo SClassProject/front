@@ -2,6 +2,7 @@ from flask import Flask, session, render_template, url_for, redirect, request
 from forms import RegistrationForm, roomRegistration, loginRegistration
 import numpy as np
 import ssl
+import base64
 
 app = Flask(__name__)
  
@@ -22,6 +23,19 @@ def register():
     if form.validate_on_submit():
         return render_template("getimg.html")
     return render_template("register.html", form=form)
+
+@app.route('/upload', methods=["GET","POST"])
+def upload():
+    if request.method == 'POST':
+        f = request.files['file']
+
+        fileName = f.filename
+        imageData = base64.b64decode(f.read()+'='*(4-len(f.read())%4))
+        with open('static/uploads/'+ fileName, 'wb') as file:  
+            file.write(imageData)
+        session.pop('register_id',None)
+        return str(f)
+    return 0
 
 @app.route('/register/getImg')
 def getcapture():

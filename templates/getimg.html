@@ -1,12 +1,15 @@
 {% extends 'base.html' %} {% block content %}
 <canvas id="camera-sensor"></canvas>
 <div id="getImg" class="box">
-  <h3 style="color: aliceblue">정면을 바라보고 아래 버튼을 눌러 캡처하세요.</h3>
+  <h3 style="color: aliceblue">
+    사진 저장 버튼을 눌러 얼굴을 캡쳐하고, 업로드 버튼을 눌러 서버에 업로드
+    해주세요.
+  </h3>
   <div id="camera">
     <video id="camera-view" autoplay playsinline></video>
     <br />
     <button id="capture">사진 저장</button>
-    <button id="upLoad">upLoad</button>
+    <button id="upLoad">업로드</button>
   </div>
 
   <button id="to_character" onclick="location.href='/register/character'">
@@ -19,19 +22,12 @@
   const cameraView = document.querySelector("#camera-view");
   const captureButton = document.querySelector("#capture");
   const uploadButton = document.querySelector("#upLoad");
-  let user = window.sessionStorage.getItem("login_user");
   let constraints = { video: true, audio: false };
-
-  // console.log("cameraView"+cameraView);
-  // console.log("cameraSensor"+cameraSensor);
-  // console.log("captureButton"+captureButton);
 
   function cameraStart() {
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then(function (stream) {
-        // console.log(stream);
-        // track = stream.getTracks()[0];
         cameraView.srcObject = stream;
       })
       .catch(function (error) {
@@ -55,32 +51,30 @@
   window.addEventListener("load", cameraStart, false);
   captureButton.addEventListener("click", capture);
 
-  // function uploadImage(){
-  //   const imgBase64 = cameraSensor.toDataURL('image/jpeg','image/octet-stream');
-  //   const decodImg = atob(imgBase64.split(',')[1]);
-  //   let array=[];
-  //   for (let i=0;i<decodImg.length;i++){
-  //     array.push(decodImg.charCodeAt(i));
-  //   }
+  function uploadImage() {
+    let userLabel = document.querySelector("#register_id");
+    let user = userLabel.innerText;
+    const imgBase64 = cameraSensor.toDataURL("image/png", "image/octet-stream");
+    var imageData = imgBase64.split(",")[1];
 
-  //   const file = new Blob([new Uint8Array(array)],{type: 'image/jepg'});
-  //   const fileName = user+'.png';
-  //   let formData = new FormData();
-  //   formData.append('file',file,fileName);
+    const file = new Blob([imageData], { type: "image/png" });
+    const fileName = user + ".png";
+    var formData = new FormData();
+    formData.append("file", file, fileName);
 
-  //   $.ajax({
-  //     type: 'post',
-  //     url: '/upload/',
-  //     cache: false,
-  //     data: formData,
-  //     processData: false,
-  //     contentType: false,
-  //     success: function (data) {
-  //       alert('Uploaded !!')
-  //     }
-  //   })
-  // }
+    $.ajax({
+      type: "POST",
+      url: "/upload",
+      cache: false,
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (data) {
+        alert("사진이 저장되었습니다.");
+      },
+    });
+  }
 
-  // uploadButton.addEventListener("click",uploadImage);
+  uploadButton.addEventListener("click", uploadImage);
 </script>
 {% endblock %}
