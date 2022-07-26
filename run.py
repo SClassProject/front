@@ -75,4 +75,5 @@ def room(room_id):
     return render_template("room.html", room_id=room_id)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=443, debug=True, ssl_context='adhoc')
+    app.run(host='0.0.0.0', debug=True)
+    # app.run(host='0.0.0.0', port=443, debug=True, ssl_context='adhoc')
