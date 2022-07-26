@@ -59,16 +59,38 @@ const replay = document.querySelector("#reChoose");
 const closeChoose = document.querySelector("#closeChoose");
 const randomButton = document.querySelector("#random_button");
 let users = ["이수빈", "장현아", "전지은", "최예진"]; // 접속중인 유저 리스트가 들어가도록 수정
+var randomRunTime = 20;
+
+function startTime() {
+  // 일정 시간 이후 창 닫히도록
+  var x = setInterval(function () {
+    closeChoose.value = `닫기 ( ${randomRunTime} s)`;
+    if (randomRunTime == 0) {
+      chosen.classList.add(HIDDEN_CLASSNAME);
+      clearInterval(x);
+    } else {
+      closeChoose.value = `닫기 ( ${randomRunTime} s)`;
+      randomRunTime = randomRunTime - 1;
+    }
+  }, 1000);
+}
 
 function randomUser(event) {
+  // 유저 추첨해서 창 띄워주는 함수
   event.preventDefault();
   let chosenUser = users[Math.floor(Math.random() * users.length)];
   chosenLabel.innerText = `>> ${chosenUser} <<`;
+  randomRunTime = 20;
+  closeChoose.value = `닫기 ( ${randomRunTime} s)`;
   chosen.classList.remove(HIDDEN_CLASSNAME);
+  startTime();
 }
 
 function reChoose(event) {
+  // 띄워진 창에서 유저 재추첨하는 함수
   event.preventDefault();
+  randomRunTime = 20;
+  closeChoose.value = `닫기 ( ${randomRunTime} s)`;
   let chosenUser = users[Math.floor(Math.random() * users.length)];
   while (chosenLabel.innerText == `>> ${chosenUser} <<`) {
     chosenUser = users[Math.floor(Math.random() * users.length)];
@@ -77,9 +99,11 @@ function reChoose(event) {
 }
 
 function closeRandom(event) {
+  // 추첨창 닫는 함수
   event.preventDefault();
   chosenLabel.innerText = "";
   chosen.classList.add(HIDDEN_CLASSNAME);
+  clearInterval(x);
 }
 
 randomButton.addEventListener("click", randomUser);
