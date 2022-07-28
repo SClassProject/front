@@ -109,3 +109,64 @@ function closeRandom(event) {
 randomButton.addEventListener("click", randomUser);
 replay.addEventListener("click", reChoose);
 closeChoose.addEventListener("click", closeRandom);
+
+// 소그룹
+
+const createGroup = document.querySelector("#create_group");
+const selectGroup = document.querySelector("#select_member");
+const userList = document.querySelector("#user_list");
+const select = document.querySelector("#select");
+const closeUsers = document.querySelector("#closeUsers");
+const groupMember = document.querySelector("#group_member");
+
+function addUser(username) {
+  const input = document.createElement("input");
+  input.classList.add("userCheck");
+  input.id = username;
+  input.type = "checkbox";
+  input.value = username;
+  const label = document.createElement("label");
+  label.classList.add("user");
+  label.innerText = username;
+  const p = document.createElement("p");
+  p.classList.add("userP");
+  p.appendChild(input);
+  p.appendChild(label);
+  userList.appendChild(p);
+}
+
+function openGroup(event) {
+  event.preventDefault();
+  var deleteP = document.querySelectorAll("p");
+  for (var d of deleteP) {
+    console.log(d);
+    d.remove();
+  }
+  for (var u of users) {
+    addUser(u);
+  }
+  selectGroup.classList.remove(HIDDEN_CLASSNAME);
+}
+
+function closeGroup(event) {
+  event.preventDefault();
+  selectGroup.classList.add(HIDDEN_CLASSNAME);
+}
+
+function decideGroup(event) {
+  event.preventDefault();
+  var members = document.querySelectorAll(".userCheck");
+  var memberList = [];
+  for (var m of members) {
+    if (m.checked) {
+      memberList.push(m.value);
+    }
+  }
+  groupMember.innerText = `그룹멤버: ${memberList}`;
+  groupMember.classList.remove(HIDDEN_CLASSNAME);
+  selectGroup.classList.add(HIDDEN_CLASSNAME);
+}
+
+createGroup.addEventListener("click", openGroup);
+closeUsers.addEventListener("click", closeGroup);
+select.addEventListener("click", decideGroup);

@@ -79,7 +79,7 @@ body {
   font-size: 14px;
 }
 
-label {
+label:not(.user):not(#user_title) {
   float: left;
   margin-left: 5%;
   padding-top: 5px;
@@ -88,7 +88,7 @@ label {
   color: aliceblue;
 }
 
-input:not(.list) {
+input:not(.list):not(.button):not(.userCheck) {
   right: 23%;
   height: 30px;
   width: 50%;
@@ -252,6 +252,42 @@ video {
   height: 50%;
   background-color: whitesmoke;
   border-radius: 50px;
+}
+
+#select_member {
+  position: fixed;
+  top: 35%;
+  right: 15%;
+  width: 10%;
+  height: 45%;
+  background-color: whitesmoke;
+  color: black;
+}
+
+#group_member {
+  position: fixed;
+  top: 85%;
+  right: 5%;
+  width: fit-content;
+  height: fit-content;
+  color: whitesmoke;
+}
+
+input.userCheck {
+  zoom: 1.5;
+}
+
+label.user {
+  color: black;
+}
+
+.user {
+  height: 10px;
+}
+
+.button {
+  top: 90%;
+  width: 45%;
 }
 
 ul {
