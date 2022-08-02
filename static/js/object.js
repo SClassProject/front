@@ -119,6 +119,13 @@ const select = document.querySelector("#select");
 const closeUsers = document.querySelector("#closeUsers");
 const groupMember = document.querySelector("#group_member");
 
+const groupButtons = document.querySelector("#group_button");
+const speakTo = document.querySelector("#speak_to");
+const speakAll = document.querySelector("#speak_all");
+const speakGroup = document.querySelector("#speak_group");
+const leaveGroup = document.querySelector("#leave_group");
+
+// 유저 리스트 로드
 function addUser(username) {
   const input = document.createElement("input");
   input.classList.add("userCheck");
@@ -135,11 +142,12 @@ function addUser(username) {
   userList.appendChild(p);
 }
 
+// 그룹 멤버 선택창 열기
 function openGroup(event) {
   event.preventDefault();
-  var deleteP = document.querySelectorAll("p");
+  var deleteP = document.querySelectorAll(".userP");
   for (var d of deleteP) {
-    console.log(d);
+    // console.log(d);
     d.remove();
   }
   for (var u of users) {
@@ -148,11 +156,13 @@ function openGroup(event) {
   selectGroup.classList.remove(HIDDEN_CLASSNAME);
 }
 
+// 그룹멤버 선택창 닫기
 function closeGroup(event) {
   event.preventDefault();
   selectGroup.classList.add(HIDDEN_CLASSNAME);
 }
 
+// 그룹 생성
 function decideGroup(event) {
   event.preventDefault();
   var members = document.querySelectorAll(".userCheck");
@@ -165,8 +175,31 @@ function decideGroup(event) {
   groupMember.innerText = `그룹멤버: ${memberList}`;
   groupMember.classList.remove(HIDDEN_CLASSNAME);
   selectGroup.classList.add(HIDDEN_CLASSNAME);
+  groupButtons.classList.remove(HIDDEN_CLASSNAME);
+  speakTo.innerText = "마이크: 그룹";
+}
+
+//그룹 나가기
+function deleteGroup(event) {
+  event.preventDefault();
+  groupButtons.classList.add(HIDDEN_CLASSNAME);
+  groupMember.classList.add(HIDDEN_CLASSNAME);
+  speakTo.innerText = "마이크: 전체";
 }
 
 createGroup.addEventListener("click", openGroup);
 closeUsers.addEventListener("click", closeGroup);
 select.addEventListener("click", decideGroup);
+leaveGroup.addEventListener("click", deleteGroup);
+
+// 마이크 전체로
+speakAll.addEventListener("click", (event) => {
+  event.preventDefault();
+  speakTo.innerText = "마이크: 전체";
+});
+
+// 마이크 그룹으로
+speakGroup.addEventListener("click", (event) => {
+  event.preventDefault();
+  speakTo.innerText = "마이크: 그룹";
+});

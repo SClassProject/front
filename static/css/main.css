@@ -88,7 +88,7 @@ label:not(.user):not(#user_title) {
   color: aliceblue;
 }
 
-input:not(.list):not(.button):not(.userCheck) {
+input:not(.list):not(.button):not(.userCheck):not(.group_button) {
   right: 23%;
   height: 30px;
   width: 50%;
@@ -270,6 +270,27 @@ video {
   right: 5%;
   width: fit-content;
   height: fit-content;
+  color: whitesmoke;
+}
+
+#group_button {
+  position: fixed;
+  top: 90%;
+  right: 5%;
+  width: fit-content;
+  height: fit-content;
+}
+
+.group_button {
+  display: inline;
+  width: fit-content;
+  height: fit-content;
+}
+
+#speak_to {
+  position: fixed;
+  top: 65%;
+  right: 7%;
   color: whitesmoke;
 }
 
