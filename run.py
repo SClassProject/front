@@ -35,7 +35,7 @@ def upload():
             file.write(imageData)
         session.pop('register_id',None)
         return str(f)
-    return 0
+    return "0"
 
 @app.route('/register/getImg')
 def getcapture():
