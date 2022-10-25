@@ -1,6 +1,5 @@
 from flask import Flask, session, render_template, url_for, redirect, request
 from forms import RegistrationForm, roomRegistration, loginRegistration
-import numpy as np
 import ssl
 import base64
 
@@ -11,6 +10,7 @@ app.config["SECRET_KEY"] = 'd2707fea9778e085491e2dbbc73ff30e'
 
 @app.route('/', methods=["GET","POST"])
 def login():
+    session.pop('register_id',None)
     session.pop('login_user', None)
     if request.method == 'POST':
         session['login_user'] = request.form['id']
@@ -21,6 +21,7 @@ def login():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+        session['register_id'] = request.form['userNumber']
         return render_template("getimg.html")
     return render_template("register.html", form=form)
 
@@ -33,7 +34,18 @@ def upload():
         imageData = base64.b64decode(f.read()+'='*(4-len(f.read())%4))
         with open('static/uploads/'+ fileName, 'wb') as file:  
             file.write(imageData)
-        session.pop('register_id',None)
+        return str(f)
+    return "0"
+
+@app.route('/uploadPhantom', methods=["GET","POST"])
+def uploadPhantom():
+    if request.method == 'POST':
+        f = request.files['file']
+
+        fileName = f.filename
+        imageData = base64.b64decode(f.read().decode('utf-8')+'='*(4-len(f.read())%4))
+        with open('static/img/phantoms/'+ fileName, 'wb') as file:  
+            file.write(imageData)
         return str(f)
     return "0"
 

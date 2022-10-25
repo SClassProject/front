@@ -1,7 +1,10 @@
 // 이미지 로딩
 
+let userLabel = document.querySelector("#login_user");
+let user = userLabel.innerText;
+
 let img = new Image();
-img.src = "../static/img/phantom.png";
+img.src = `../static/img/phantoms/${user}.png`;
 img.onload = function () {
   window.requestAnimationFrame(gameLoop);
 };

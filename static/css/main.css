@@ -50,7 +50,7 @@ body {
   background-color: rgb(30, 35, 88, 0.6);
 }
 
-#newCharacter {
+/* #newCharacter {
   position: fixed;
   left: 35%;
   top: 25%;
@@ -61,7 +61,7 @@ body {
   font-size: 15px;
   text-align: center;
   background-color: rgb(30, 35, 88, 0.6);
-}
+} */
 
 #login form {
   margin-top: 20%;
@@ -232,7 +232,7 @@ video {
   height: 20%;
 }
 
-#random {
+#random:not(.avatar) {
   width: 50%;
   height: 50%;
   background-color: whitesmoke;
